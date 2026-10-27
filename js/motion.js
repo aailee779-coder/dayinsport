@@ -16,6 +16,13 @@
   }
   const E = 'expo.out', mm = gsap.matchMedia();
 
+  /* ---------- COMMI hero + counters ---------- */
+  const ch = $('.cm-hero');
+  if (ch) gsap.timeline({ defaults: { ease: E } }).from($$('video', ch), { scale: 1.15, duration: 2.4 }, 0).from($$('.x-line>span', ch), { yPercent: 110, duration: 1.2, stagger: .1 }, .2).from($$('[data-x-in]', ch), { y: 24, opacity: 0, duration: 1, stagger: .1 }, .5);
+  $$('[data-cnt]').forEach((dd, i) => { const t = dd.textContent, m = t.match(/[\d.]+/); if (!m) return; const end = parseFloat(m[0]), dec = (m[0].split('.')[1] || '').length, o = { v: 0 };
+    ScrollTrigger.create({ trigger: dd, start: 'top 90%', once: true, onEnter: () => gsap.to(o, { v: end, duration: 1.6, delay: (i % 4) * .1, ease: 'power3.out', onUpdate: () => dd.textContent = t.replace(m[0], o.v.toFixed(dec)) }) }); });
+  const pd = $('.cm-pd');
+  if (pd) gsap.timeline({ defaults: { ease: E } }).from($('.cm-gal img', pd), { scale: .85, opacity: 0, duration: 1.4 }, 0).from($$('.cm-info > *', pd), { y: 24, opacity: 0, duration: .9, stagger: .05 }, .15);
   /* ---------- HOME ---------- */
   const hero = $('[data-x="hero"]');
   if (hero) {
@@ -90,7 +97,7 @@
       box.addEventListener('pointerleave', () => gsap.to(img, { rotateY: 0, rotateX: 0, x: 0, y: 0, duration: 1.2, ease: E })); }
   }
   $$('.specs tbody tr').forEach((r, i) => gsap.from(r, { x: -20, opacity: 0, duration: .7, ease: E, scrollTrigger: { trigger: r, start: 'top 95%' } }));
-  ScrollTrigger.batch($$('main .card, main .feat, main .tile, main .seg, main .cert, main .step, main .plant'), { start: 'top 92%', once: true,
+  ScrollTrigger.batch($$('main .card, main .feat, main .tile, main .seg, main .cert, main .step, main .plant, main .cm-card, main .cm-box'), { start: 'top 92%', once: true,
     onEnter: b => gsap.from(b, { y: 50, opacity: 0, scale: .97, duration: 1, stagger: .06, ease: E, overwrite: true }) });
   $$('main h1.h1, main .h-hero, main h2.h2').forEach(h => { if (h.closest('.x-hero,.x-board,[data-x]')) return; gsap.from(h, { y: 40, opacity: 0, duration: 1.1, ease: E, scrollTrigger: { trigger: h, start: 'top 90%' } }); });
   $$('.media img, .roof img').forEach(im => gsap.fromTo(im, { scale: 1.15 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: im, scrub: true } }));
